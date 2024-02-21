@@ -1,0 +1,29 @@
+{
+  "name": "esametechweb",
+  "version": "1.0.0",
+  "description": "Sito web di esempio creato con Node.js e Express",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuonome/nomerepository.git"
+  },
+  "keywords": [
+    "web",
+    "Node.js",
+    "Express"
+  ],
+  "author": "domenico",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.2"
+  },
+  "bugs": {
+    "url": "https://github.com/tuonome/nomerepository/issues"
+  },
+  "homepage": "https://github.com/tuonome/nomerepository#readme"
+}

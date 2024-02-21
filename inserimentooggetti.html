@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Carica Oggetto</title>
+</head>
+<body>
+    <h1>Carica un nuovo oggetto</h1>
+    <form id="caricaOggettoForm" method="POST" action="http://localhost:3000/oggetti" enctype="multipart/form-data">
+        <label for="nome">Nome dell'oggetto:</label>
+        <input type="text" name="nome" id="nome" required><br>
+
+        <label for="descrizione">Descrizione:</label>
+        <input type="text" name="descrizione" id="descrizione" required><br>
+
+        <label for="prezzo">Prezzo:</label>
+        <input type="number" name="prezzo" id="prezzo" required><br>
+
+        <label for="categoria">Categoria:</label>
+        <input type="text" name="categoria" id="categoria" required><br>
+
+        <label for="proprietario">Proprietario:</label>
+        <input type="text" name="proprietario" id="proprietario" required><br>
+
+        <label for="immagine">Immagine:</label>
+        <input type="file" name="immagine" id="immagine" required accept="image/*"><br>
+
+        <input type="submit" value="Carica Oggetto">
+    </form>
+</body>
+</html>

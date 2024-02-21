@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PROGETTO TECHWEB</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg'); /* Imposta l'immagine di sfondo */
+            background-size: cover; /* Copri tutto lo sfondo */
+        }
+
+        nav {
+            background-color: #333;
+            padding: 20px 0; /* Aggiunge spazio sopra e sotto la barra di navigazione */
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px; /* Rendi il testo più grande */
+            transition: color 0.2s; /* Aggiungi una transizione di colore al passaggio del mouse */
+        }
+
+        nav a:hover {
+            color: yellow; /* Cambia il colore al passaggio del mouse */
+        }
+
+        .content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Contattaci</a></li>
+            <li><a href="#">Registrati</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>Registrazione</h1>
+    <form id="registrazioneForm" method="POST" action="http://localhost:3000/utente" enctype="multipart/form-data">
+		<label for="username">Username:</label>
+		<input type="text" name="username" id="username" required><br>
+		
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome" id="nome" required><br>
+		
+		<label for="cognome">Cognome:</label>
+		<input type="text" name="cognome" id="cognome" required><br>
+		
+		<label for="password">Password:</label>
+		<input type="password" name="password" id="password" required><br>
+
+		<label for="email">Email:</label>
+		<input type="email" name="email" id="email" required><br>
+
+		<label for="dataDiNascita">Data di Nascita:</label>
+		<input type="date" name="dataDiNascita" id="dataDiNascita" required><br>
+
+		<input type="submit" value="Registrati">
+	</form>
+
+        <div id="risultato"></div>
+    </div>
+</body>
+</html>
