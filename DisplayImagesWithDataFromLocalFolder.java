@@ -34,7 +34,7 @@ public class DisplayImagesWithDataFromLocalFolder extends JPanel {
                             BufferedImage image = ImageIO.read(imageFile);
                             if (image != null) {
                                 ImageData imageData = new ImageData();
-                                imageData.image = resizeImage(image, 200, 150);
+                                imageData.image = resizeImage(image, 200, 200);
                                 imageData.name = fields[0];
                                 imageData.description = fields[1];
                                 if (imageData.description.length() > 23) {//altrimenti troppo grande la descrizione
@@ -97,8 +97,8 @@ for (ImageData imageData : imageDataList) {
             name = imageData.name;
         }
         itemPanel.add(new JLabel("Nome: " + name));
-        itemPanel.add(new JLabel("Descrizione: " + imageData.description));
-        itemPanel.add(new JLabel("Prezzo: " + imageData.price));
+        //itemPanel.add(new JLabel("Descrizione: " + imageData.description));
+        //itemPanel.add(new JLabel("Prezzo: " + imageData.price));
         itemPanel.add(new JLabel("Categoria: " + imageData.category));
     
     JButton button = new JButton("Riproduci");
@@ -131,10 +131,10 @@ for (ImageData imageData : imageDataList) {
         
         });
         // Aggiungi strutture di spaziatura vuote tra gli elementi
-        itemPanel.add(Box.createVerticalStrut(50)); // Spazio verticale tra i pannelli degli elementi
+        itemPanel.add(Box.createVerticalStrut(50));
     } else if (utente == 0) {
         // Aggiungi strutture di spaziatura vuote tra gli elementi
-        itemPanel.add(Box.createVerticalStrut(10)); // Spazio verticale tra i pannelli degli elementi
+        itemPanel.add(Box.createVerticalStrut(10));
     }
 
     add(itemPanel);
@@ -149,6 +149,7 @@ for (ImageData imageData : imageDataList) {
     private static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
         BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = resizedImage.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
         g.dispose();
         return resizedImage;

@@ -40,7 +40,7 @@ public class UserProfileFrame extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (currentImage != null) {
-                    g.drawImage(currentImage, 0, 0, 100, 100, this);
+                    g.drawImage(currentImage, 0, 0, 120, 120, this);
                 }
             }
         };

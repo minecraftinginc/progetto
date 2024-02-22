@@ -95,7 +95,7 @@ public class SitoFrame extends JFrame {
                 if (newImage != null) {
                     currentImage = newImage;
                 }
-                Image scaledImage = currentImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                Image scaledImage = currentImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
                 ImageIcon scaledIcon = new ImageIcon(scaledImage);
                 imageLabel.setIcon(scaledIcon);
             }

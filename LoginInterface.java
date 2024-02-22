@@ -51,13 +51,11 @@ public class LoginInterface extends JFrame {
     private JPanel leftPanel;
     // Dichiarazione di una variabile di riferimento per la finestra di login
     private static LoginInterface loginInterface;
-    ImageIcon faviconIcon = new ImageIcon("icona.png"); // Sostituisci "spiaggia.ico" con il nome del tuo file di icona.
+    ImageIcon faviconIcon = new ImageIcon("icona.png"); 
     private void login() {
     String username = usernameField.getText();
     String password = new String(passwordField.getPassword());
     if (authenticate(username, password)) {
-        // Non � necessario passare surname ed email separatamente,
-        // poich� li hai gi� ottenuti durante l'autenticazione.
         dispose(); // Chiudi la finestra di login
     } else {
         JOptionPane.showMessageDialog(null, "Accesso fallito. Riprova.");
@@ -185,6 +183,7 @@ public class LoginInterface extends JFrame {
     };
 
     JLabel passwordLabel = new JLabel("Password:");
+    passwordLabel.setForeground(Color.WHITE);
     passwordLabel.setFont(labelFont);
 
     JPasswordField passwordField = new JPasswordField(20) {
@@ -206,6 +205,7 @@ public class LoginInterface extends JFrame {
     };
     
     JLabel usernameLabel = new JLabel("Username:");
+    usernameLabel.setForeground(Color.WHITE);
     usernameLabel.setFont(labelFont);
 
 JTextField usernameField = new JTextField(20) {
@@ -226,7 +226,8 @@ JTextField usernameField = new JTextField(20) {
     }
 };
 
-    JLabel dobLabel = new JLabel("Data di Nascita:");
+    JLabel dobLabel = new JLabel("Date:");
+    dobLabel.setForeground(Color.WHITE);
     dobLabel.setFont(labelFont);
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Define your date format
@@ -241,6 +242,7 @@ JTextField usernameField = new JTextField(20) {
     dobField.setColumns(10); // You can adjust the width of the field as needed
     
     JLabel emailLabel = new JLabel("Email:");
+    emailLabel.setForeground(Color.WHITE);
     emailLabel.setFont(labelFont);
 
     JTextField emailField = new JTextField(20) {
@@ -400,7 +402,7 @@ registerButton.addActionListener(new ActionListener() {
 
         JLabel titleLabel = new JLabel("Benvenuto!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         backgroundPanel.add(titleLabel, gbc);
@@ -416,9 +418,11 @@ registerButton.addActionListener(new ActionListener() {
 
         gbc.gridwidth = 1;
         gbc.gridy = 1;
+        gbc.gridx = 0;
         JLabel usernameLabel = new JLabel("Username:");
         Font labelFont = usernameLabel.getFont();
         usernameLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        usernameLabel.setForeground(Color.WHITE);
         backgroundPanel.add(usernameLabel, gbc);
 
         gbc.gridx = 1;
@@ -429,6 +433,7 @@ registerButton.addActionListener(new ActionListener() {
         gbc.gridy = 2;
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        passwordLabel.setForeground(Color.WHITE);
         backgroundPanel.add(passwordLabel, gbc);
 
         gbc.gridx = 1;
@@ -461,7 +466,7 @@ registerButton.addActionListener(new ActionListener() {
             if (newImage == null) {
                 // L'immagine � stata cambiata, aggiornala in "sito"
                 JLabel imageLabel = (JLabel) leftPanel.getComponent(0);
-                ImageIcon newImageIcon = new ImageIcon(newImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+                ImageIcon newImageIcon = new ImageIcon(newImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH));
                 imageLabel.setIcon(newImageIcon);
                 currentImage=SharedImage.getCurrentImage();
                 newImage=SharedImage.getCurrentImage();

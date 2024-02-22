@@ -1,13 +1,14 @@
 HELLRAISER3,L'inferno sta arrivando sul nostro pianeta,200.00,Paura,Spielberg,/uploads/HELLRAISER3.jpg
-JOKER,Il racconto di un pazzo,100.00,Thriller:Azione:Commedia,Joker,/uploads/JOKER.jpeg
+JOKER,Il racconto di un pazzo,100.00,Thriller:Azione:Commedia,Joker,/uploads/JOKER.jpg
 WONKA,cioccolato,120.00,Avventura:Fantascienza,WONG,/uploads/WONKA.jpg
 InsideOut2,racconta delle emozioni di una adolescente,250.00,Avventura:Commedia:Animazione,Zeno,/uploads/InsideOut2.jpg
 NAPOLEON,la storia di Napoleone,3500.00,Storico:Azione:Thriller,Phoenix,/uploads/NAPOLEON.jpg
 Interstellar,Prossimo futuro,290.00,Fantascienza:Avventura:Thriller,Christophernolan,/uploads/Interstellar.jpg
 SHARK2,i megalodonti esistono,333.00,Thriller:Fantascienza:Azione,L'abisso,/uploads/SHARK2.jpg
 SHOGUN,ambientato nel feudale giappone,500.00,Storico:Azione:Avventura,ALLMIGHT,/uploads/SHOGUN.jpg
-Wish,il rigno dei desideri,280.00,Animazione:Avventura,D'ambrosio,/uploads/Wish.jpeg
+Wish,il regno dei desideri,280.00,Animazione:Avventura,D'ambrosio,/uploads/Wish.jpg
 TERRIFIER3,Un bel natale da incubo,400.00,Paura:Thriller:Azione,Alberigo,/uploads/TERRIFIER3.jpg
-SmallSoldiers,anche da un piccolo cuore nasce il più grande dei coraggi,720.00,Animazione:Azione:Fantascienza,Siryup,/uploads/SmallSoldiers.jpg
+SmallSoldiers,anche da un piccolo cuore nasce il più grande dei  coraggi,720.00,Animazione:Azione:Fantascienza,Siryup,/uploads/SmallSoldiers.jpg
 WINNIETHEPOOHSANGUEEMIELE,bello il miele ma anche il sangue,650.00,Paura:Azione,Spillberg,/uploads/WINNIETHEPOOHSANGUEEMIELE.jpg
 Cyberpunk2077,Una citta da incubo,1400.00,Animazione:Thriller:Azione:Anime,Alberigo,/uploads/Cyberpunk2077.jpg
+KungFuPanda1,kung fu panda e le sue avventure,200,Animazione:Azione:Anime,Jon,/uploads/KungFuPanda1.jpg

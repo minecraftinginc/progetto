@@ -11,24 +11,36 @@ public class Homepage extends JFrame {
         int n=0;
         // Navbar con pulsanti
         navbarPanel = new JPanel();
-        navbarPanel.setBackground(Color.BLACK);
+        navbarPanel.setBackground(new Color(51, 0, 110));
         navbarPanel.setLayout(new BoxLayout(navbarPanel, BoxLayout.X_AXIS)); // Utilizza BoxLayout per allineare i componenti
 
-        // Aggiungi il pulsante "Feedback" con un'icona di cuore
-        Font font = new Font("Arial", Font.PLAIN, 20); // Specifica il font e le dimensioni
-        JButton feedbackButton = new JButton("\u2665 Feedback"); // Utilizza il codice Unicode per il carattere cuore
+        // Aggiungi l'immagine del logo
+        ImageIcon logoIcon = getScaledImageIcon("Logo.png", 112, 90); // Imposta le dimensioni desiderate per il logo
+        JLabel logoLabel = new JLabel(logoIcon);
+        navbarPanel.add(logoLabel); // Aggiungi l'etichetta del logo alla barra di navigazione
+        Font font = new Font("Arial", Font.PLAIN, 18); // Specifica il font e le dimensioni
+        RoundedButton feedbackButton = new RoundedButton("\u2665 Feedback"); // Usa la classe RoundedButton invece di JButton
         feedbackButton.setFont(font); // Imposta il font al pulsante
         navbarPanel.add(feedbackButton); // Aggiungi il pulsante "Feedback" prima del pulsante "Login/Registration"
-        
-        JButton videoButton = new JButton("\u2022 Video Istruttivo");
-        videoButton.setFont(font);
-        navbarPanel.add(videoButton);
+
+        navbarPanel.add(Box.createHorizontalStrut(10)); // Aggiunge uno spaziatore orizzontale di 10 pixel
+        RoundedButton videoButton = new RoundedButton("\u2022 Video Istruttivo"); // Utilizza il codice Unicode per il carattere del pallino
+        videoButton.setFont(font); // Imposta il font al pulsante
+
+        navbarPanel.add(videoButton); // Aggiungi il pulsante "Video Istruttivo" dopo il pulsante "Feedback"
+
+        // Utilizza RoundedButton per il pulsante di login/registrazione
+        RoundedButton loginButton = new RoundedButton("Login/Registrati");
+        loginButton.setFont(font);
+
+        // Aggiungi l'icona al pulsante di login/registrazione
         ImageIcon loginIcon = getScaledImageIcon("user.png", 20, 20);
-        JButton loginButton = new JButton("Login/Registration", loginIcon);
-        navbarPanel.add(Box.createHorizontalGlue()); // Aggiungi uno spazio elastico per spostare il pulsante a destra
+        loginButton.setIcon(loginIcon);
+
+        navbarPanel.add(Box.createHorizontalGlue());
         navbarPanel.add(loginButton);
 
-        add(navbarPanel, BorderLayout.NORTH);        
+        add(navbarPanel, BorderLayout.NORTH);       
         // Create the mainPanel
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -102,7 +114,21 @@ videoButton.addActionListener(e -> {
     private ImageIcon getScaledImageIcon(String imagePath, int width, int height) {
         ImageIcon originalIcon = new ImageIcon(imagePath);
         Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    
+        // Calcoliamo il rapporto tra altezza e larghezza dell'immagine originale
+        double aspectRatio = (double) originalImage.getHeight(null) / originalImage.getWidth(null);
+    
+        // Calcoliamo le nuove dimensioni rispettando il rapporto di aspetto
+        int newWidth = width;
+        int newHeight = height;
+        if (width / aspectRatio > height) {
+            newWidth = (int) (height / aspectRatio);
+        } else {
+            newHeight = (int) (width * aspectRatio);
+        }
+    
+        // Ridimensioniamo l'immagine
+        Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
     }
 
