@@ -86,7 +86,7 @@ public class LoginInterface extends JFrame {
                 storedEmail = parts[3];
                 storedUsername=parts[4];
                 storeddate=parts[5];
-                if (storedname.equals(name) && storedPassword.equals(password)) {
+                if (storedUsername.equals(name) && storedPassword.equals(password)) {
                     // Crea un'istanza di SitoFrame e passa i dati necessari
                     sitoFrame = new SitoFrame(storedUsername, storedSurname, storedEmail, storedname, storeddate, currentImage, faviconIcon,null);
                     return true;
@@ -486,6 +486,7 @@ registerButton.addActionListener(new ActionListener() {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                login();
             }
 
             @Override
@@ -500,21 +501,6 @@ registerButton.addActionListener(new ActionListener() {
             @Override
             public void mouseExited(MouseEvent e) {
                 loginButton.setBackground(new Color(144, 15, 177));
-            }
-        });
-
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                login();
-            }
-        });
-
-        passwordField.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    login();
-                }
             }
         });
 

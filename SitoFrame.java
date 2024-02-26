@@ -332,7 +332,6 @@ public class SitoFrame extends JFrame {
         }
         
     });
-    // Aggiunta di un ActionListener al pulsante di logout
     logout.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseEntered(MouseEvent e) {
