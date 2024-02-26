@@ -53,7 +53,7 @@ public class RoundedButton extends JButton {
         } else {
             g2.setColor(getBackground());
         }
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // Disegna il rettangolo con angoli arrotondati
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // Disegna il rettangolo con angoli arrotondati
         g2.dispose();
 
         super.paintComponent(g);
@@ -61,6 +61,6 @@ public class RoundedButton extends JButton {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(200, 40); // Imposta le dimensioni del pulsante
+        return new Dimension(170, 40); // Imposta le dimensioni del pulsante
     }
 }

@@ -1,6 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
 import java.io.File;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class Homepage extends JFrame {
     private JPanel navbarPanel;
     private JPanel mainPanel;
@@ -18,6 +21,7 @@ public class Homepage extends JFrame {
         ImageIcon logoIcon = getScaledImageIcon("Logo.png", 112, 90); // Imposta le dimensioni desiderate per il logo
         JLabel logoLabel = new JLabel(logoIcon);
         navbarPanel.add(logoLabel); // Aggiungi l'etichetta del logo alla barra di navigazione
+        navbarPanel.add(Box.createHorizontalStrut(20)); // Aggiunge uno spaziatore orizzontale di 10 pixel
         Font font = new Font("Arial", Font.PLAIN, 18); // Specifica il font e le dimensioni
         RoundedButton feedbackButton = new RoundedButton("\u2665 Feedback"); // Usa la classe RoundedButton invece di JButton
         feedbackButton.setFont(font); // Imposta il font al pulsante
@@ -30,12 +34,31 @@ public class Homepage extends JFrame {
         navbarPanel.add(videoButton); // Aggiungi il pulsante "Video Istruttivo" dopo il pulsante "Feedback"
 
         // Utilizza RoundedButton per il pulsante di login/registrazione
-        RoundedButton loginButton = new RoundedButton("Login/Registrati");
-        loginButton.setFont(font);
+        JButton loginButton = new JButton();
+        loginButton.setOpaque(false);
+        loginButton.setContentAreaFilled(false);
+        loginButton.setBorderPainted(false);
+        loginButton.setFocusPainted(false);
 
         // Aggiungi l'icona al pulsante di login/registrazione
-        ImageIcon loginIcon = getScaledImageIcon("user.png", 20, 20);
+        ImageIcon loginIcon = getScaledImageIcon("s1.png", 45, 45);
         loginButton.setIcon(loginIcon);
+
+        // Aggiungi un listener per gestire l'evento del passaggio del mouse
+        loginButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Quando il mouse entra nel pulsante, cambia l'icona
+                ImageIcon iconHover = getScaledImageIcon("s2.png", 45, 45);
+                loginButton.setIcon(iconHover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Quando il mouse esce dal pulsante, reimposta l'icona
+                loginButton.setIcon(loginIcon);
+            }
+        });
 
         navbarPanel.add(Box.createHorizontalGlue());
         navbarPanel.add(loginButton);
@@ -145,7 +168,7 @@ Observer Pattern (Pattern Osservatore):
 L'implementazione delle azioni dei pulsanti utilizza un approccio basato su eventi, dove un'azione (click del pulsante) viene catturata 
 da un ascoltatore specifico (lambda expression).
 
-Event Handling con ActionListener:
+Event Handling con ActionListener: può essere visto anche come un meccanismo o un paradigma di programmazione per questo non lo metterò nella presentazione
 L'utilizzo di ActionListener per gestire le azioni dei pulsanti (loginButton, feedbackButton, videoButton) rappresenta un esempio di 
 event handling. Questo consente di eseguire azioni specifiche quando i pulsanti vengono premuti. 
 */

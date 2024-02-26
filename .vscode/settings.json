@@ -12,5 +12,6 @@
         "javax.mail-1.6.2.jar",
         "mailapi-1.6.2.jar",
         "mysql/mysql-connector-j-8.2.0/mysql-connector-j-8.2.0.jar"
-    ]
+    ],
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
 }

@@ -1,12 +1,10 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -18,13 +16,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException; // Add this import for ParseException
-import java.text.SimpleDateFormat; // Add this import for SimpleDateFormat
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField; // Add this import for JFormattedTextField
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -73,12 +68,12 @@ public class LoginInterface extends JFrame {
 }
         
         private boolean authenticate(String name, String password) {
-    String storedUsername = null;
-    String storedPassword = null;
-    String storedSurname = null;
-    String storedEmail = null;
-    String storedname = null;
-    String storeddate = null;
+            String storedUsername = null;
+            String storedPassword = null;
+            String storedSurname = null;
+            String storedEmail = null;
+            String storedname = null;
+            String storeddate = null;
     
     try (BufferedReader br = new BufferedReader(new FileReader("utenti.txt"))) {
         String line;
@@ -111,175 +106,146 @@ public class LoginInterface extends JFrame {
     registrationFrame.setSize(this.getSize());
     registrationFrame.setLocationRelativeTo(this);
 
-    JPanel registrationPanel = new JPanel() {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            ImageIcon imageIcon = new ImageIcon("spiaggia.jpg");
-            Image image = imageIcon.getImage();
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-        }
-    };
-
-    GridBagLayout gridBagLayout = new GridBagLayout();
-    registrationPanel.setLayout(gridBagLayout);
-
+    JPanel backgroundPanel = new JPanel();
+    backgroundPanel.setLayout(new GridBagLayout()); // Imposta il layout GridBagLayout oppure backgroundPanel.setLayout(new GridBagLayout());
+    backgroundPanel.setBackground(Color.WHITE); // Imposta il colore di sfondo bianco
     GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(7, 7, 7, 7);
+    gbc.insets = new Insets(10, 10, 10, 10);
 
-    JLabel titleLabel = new JLabel("REGISTRAZIONE");
-    titleLabel.setFont(new Font("Arial Black", Font.PLAIN, 30));
-    titleLabel.setForeground(colors[colorIndex]); // Cambia colore come in login
-    colorTimer.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            titleLabel.setForeground(colors[colorIndex]);
-            colorIndex = (colorIndex + 1) % colors.length;
-        }
-    });
+    // Creazione del pannello per il formbox
+    RoundedPanel formPanel = new RoundedPanel(20); // Imposta il raggio a 20 per bordi arrotondati
+    formPanel.setBackground(new Color(51, 0, 110));
+    formPanel.setLayout(new GridBagLayout());
+    formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Aggiunta di padding per il formbox
 
-    // Aggiungi i campi di inserimento e le etichette per nome, cognome, email e password,username,data_nascita.
-    JLabel nameLabel = new JLabel("Nome:");
-    Font labelFont = new Font("Arial Black", Font.PLAIN, 20);
-    nameLabel.setFont(labelFont);
+    JLabel titleLabel = new JLabel("Benvenuto!");
+    titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+    titleLabel.setForeground(Color.WHITE);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 2;
+    formPanel.add(titleLabel, gbc);
+        colorTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                titleLabel.setForeground(colors[colorIndex]);
+                colorIndex = (colorIndex + 1) % colors.length;
+            }
+        });
+        colorTimer.start();
 
-    JTextField nameField = new JTextField(20) {
-        @Override
-        protected void paintComponent(Graphics g) {
-            if (!isOpaque()) {
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        JLabel usernameLabel = new JLabel("Username:");
+        Font labelFont = usernameLabel.getFont();
+        usernameLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        usernameLabel.setForeground(Color.WHITE);
+        formPanel.add(usernameLabel, gbc);
+
+        gbc.gridx = 1;
+        usernameField = new JTextField(30);
+        formPanel.add(usernameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        passwordLabel.setForeground(Color.WHITE);
+        formPanel.add(passwordLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        passwordField = new JPasswordField(30);
+        formPanel.add(passwordField, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        JLabel nameLabel = new JLabel("Nome:");
+        nameLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        nameLabel.setForeground(Color.WHITE);
+        formPanel.add(nameLabel, gbc);
+
+        gbc.gridx = 1;
+        JTextField nameField = new JTextField(30);
+        formPanel.add(nameField, gbc);
+
+        // Aggiungo il campo cognome
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        JLabel surnameLabel = new JLabel("Cognome:");
+        surnameLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        surnameLabel.setForeground(Color.WHITE);
+        formPanel.add(surnameLabel, gbc);
+
+        gbc.gridx = 1;
+        JTextField surnameField = new JTextField(30);
+        formPanel.add(surnameField, gbc);
+
+        // Aggiungo il campo email
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        emailLabel.setForeground(Color.WHITE);
+        formPanel.add(emailLabel, gbc);
+
+        gbc.gridx = 1;
+        JTextField emailField = new JTextField(30);
+        formPanel.add(emailField, gbc);
+
+        // Aggiungo il campo data di nascita
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        JLabel dobLabel = new JLabel("Data di Nascita:");
+        dobLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
+        dobLabel.setForeground(Color.WHITE);
+        formPanel.add(dobLabel, gbc);
+
+        gbc.gridx = 1;
+        JTextField dobField = new JTextField("01/01/1990", 30); // Testo predefinito: 01/01/1990
+        formPanel.add(dobField, gbc);
+        
+        registerButton = new RoundedButton("Sign") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (getModel().isRollover()) {
+                    setBackground(new Color(144, 15, 177)); // Colore verde scuro al passaggio del mouse
+                } else {
+                    setBackground(new Color(255,0,173));
+                }
                 super.paintComponent(g);
-                return;
             }
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground());
-            g2.fillOval(0, 0, getWidth(), getHeight());
-            g2.setColor(getForeground());
-            g2.drawOval(0, 0, getWidth(), getHeight());
-            super.paintComponent(g2);
-            g2.dispose();
-        }
-    };
-
-    JLabel surnameLabel = new JLabel("Cognome:");
-    surnameLabel.setFont(labelFont);
-
-    JTextField surnameField = new JTextField(20) {
-        @Override
-        protected void paintComponent(Graphics g) {
-            if (!isOpaque()) {
+        };
+        registerButton.setFont(new Font("Calibri", Font.BOLD, 25));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        registerButton.setContentAreaFilled(false);
+        registerButton.setOpaque(true);
+        JButton backButton = new JButton("Login"){
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (getModel().isRollover()) {
+                    setBackground(new Color(144, 15, 177)); // Colore verde scuro al passaggio del mouse
+                } else {
+                    setBackground(new Color(255,0,173));
+                }
                 super.paintComponent(g);
-                return;
             }
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground());
-            g2.fillOval(0, 0, getWidth(), getHeight());
-            g2.setColor(getForeground());
-            g2.drawOval(0, 0, getWidth(), getHeight());
-            super.paintComponent(g2);
-            g2.dispose();
-        }
-    };
+        };
+        backButton.setFont(new Font("Calibri", Font.BOLD, 25));
+        backButton.setForeground(Color.WHITE);
+        gbc.gridy = 7; // Modifica la posizione del pulsante all'interno del formPanel
+        formPanel.add(backButton, gbc);
 
-    JLabel passwordLabel = new JLabel("Password:");
-    passwordLabel.setForeground(Color.WHITE);
-    passwordLabel.setFont(labelFont);
-
-    JPasswordField passwordField = new JPasswordField(20) {
-        @Override
-        protected void paintComponent(Graphics g) {
-            if (!isOpaque()) {
-                super.paintComponent(g);
-                return;
+        // Aggiungi un'azione al pulsante per tornare alla schermata di login
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginInterface loginInterface = new LoginInterface();
+                loginInterface.setVisible(true);
+                registrationFrame.dispose();
             }
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground());
-            g2.fillOval(0, 0, getWidth(), getHeight());
-            g2.setColor(getForeground());
-            g2.drawOval(0, 0, getWidth(), getHeight());
-            super.paintComponent(g2);
-            g2.dispose();
-        }
-    };
-    
-    JLabel usernameLabel = new JLabel("Username:");
-    usernameLabel.setForeground(Color.WHITE);
-    usernameLabel.setFont(labelFont);
-
-JTextField usernameField = new JTextField(20) {
-    @Override
-    protected void paintComponent(Graphics g) {
-        if (!isOpaque()) {
-            super.paintComponent(g);
-            return;
-        }
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(getBackground());
-        g2.fillOval(0, 0, getWidth(), getHeight());
-        g2.setColor(getForeground());
-        g2.drawOval(0, 0, getWidth(), getHeight());
-        super.paintComponent(g2);
-        g2.dispose();
-    }
-};
-
-    JLabel dobLabel = new JLabel("Date:");
-    dobLabel.setForeground(Color.WHITE);
-    dobLabel.setFont(labelFont);
-
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Define your date format
-    JFormattedTextField dobField = new JFormattedTextField(dateFormat);
-
-    try {
-        dobField.setValue(dateFormat.parse("01/01/1990")); // Initial date value
-    } catch (ParseException e) {
-        e.printStackTrace();
-    }    
-
-    dobField.setColumns(10); // You can adjust the width of the field as needed
-    
-    JLabel emailLabel = new JLabel("Email:");
-    emailLabel.setForeground(Color.WHITE);
-    emailLabel.setFont(labelFont);
-
-    JTextField emailField = new JTextField(20) {
-        @Override
-        protected void paintComponent(Graphics g) {
-            if (!isOpaque()) {
-                super.paintComponent(g);
-                return;
-            }
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground());
-            g2.fillOval(0, 0, getWidth(), getHeight());
-            g2.setColor(getForeground());
-            g2.drawOval(0, 0, getWidth(), getHeight());
-            super.paintComponent(g2);
-            g2.dispose();
-        }
-    };
-
-    JButton registerButton = new JButton("Registrati") {
-        @Override
-        protected void paintComponent(Graphics g) {
-            if (getModel().isRollover()) {
-                setBackground(new Color(0, 128, 0)); // Colore verde scuro al passaggio del mouse
-            } else {
-                setBackground(Color.GREEN);
-            }
-            super.paintComponent(g);
-        }
-    };
-    registerButton.setFont(new Font("Arial", Font.BOLD, 30));
-    registerButton.setForeground(Color.WHITE);
-    registerButton.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-    registerButton.setContentAreaFilled(false);
-    registerButton.setOpaque(true);
-
+        });
 registerButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -308,64 +274,68 @@ registerButton.addActionListener(new ActionListener() {
         registrationFrame.dispose();
     }
 });
-
+    
     gbc.gridx = 0;
     gbc.gridwidth = 2;
-
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridwidth = 2;
-    registrationPanel.add(titleLabel, gbc);
+    formPanel.add(titleLabel, gbc);//titleLabel
 
     gbc.gridy = 1;
     gbc.gridwidth = 1;
     gbc.gridx = 0;
-    registrationPanel.add(nameLabel, gbc);
+    formPanel.add(nameLabel, gbc);
     gbc.gridx = 1;
-    registrationPanel.add(nameField, gbc);
+    formPanel.add(nameField, gbc);
 
     gbc.gridx = 0;
     gbc.gridy = 2;
-    registrationPanel.add(surnameLabel, gbc);
+    formPanel.add(surnameLabel, gbc);
     gbc.gridx = 1;
-    registrationPanel.add(surnameField, gbc);
+    formPanel.add(surnameField, gbc);
 
     gbc.gridx = 0;
     gbc.gridy = 3;
-    registrationPanel.add(emailLabel, gbc);
+    formPanel.add(emailLabel, gbc);
     gbc.gridx = 1;
-    registrationPanel.add(emailField, gbc);
+    formPanel.add(emailField, gbc);
 
     gbc.gridx = 0;
     gbc.gridy = 4;
-    registrationPanel.add(passwordLabel, gbc);
+    formPanel.add(passwordLabel, gbc);
     gbc.gridx = 1;
-    registrationPanel.add(passwordField, gbc);
+    formPanel.add(passwordField, gbc);
     
     gbc.gridx = 0;
     gbc.gridy = 5;
-    registrationPanel.add(usernameLabel, gbc);
+    formPanel.add(usernameLabel, gbc);
     gbc.gridx = 1;
-    registrationPanel.add(usernameField, gbc);
+    formPanel.add(usernameField, gbc);
     
     gbc.gridx = 0;
     gbc.gridy = 6;
-    registrationPanel.add(dobField, gbc);
+    formPanel.add(dobLabel, gbc);
     gbc.gridx = 1;
-    registrationPanel.add(dobField, gbc);
+    formPanel.add(dobField, gbc);
     
     gbc.gridx = 0;
     gbc.gridy = 7;
     gbc.gridwidth = 2;
-    registrationPanel.add(registerButton, gbc);
+    formPanel.add(registerButton, gbc);
 
-    registrationFrame.add(registrationPanel);
+    gbc.gridx = 0;
+    gbc.gridy = 8;
+    gbc.gridwidth = 2;
+    formPanel.add(backButton, gbc);
+
+    backgroundPanel.add(formPanel);
+    registrationFrame.add(backgroundPanel);
 
     registrationFrame.pack();
     registrationFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     registrationFrame.setLocationRelativeTo(this);
     loginInterface.dispose();
-
     registrationFrame.setVisible(true);
 }
 
@@ -386,26 +356,24 @@ registerButton.addActionListener(new ActionListener() {
     } catch (IOException e) {
         e.printStackTrace();
     }
-        JPanel backgroundPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon imageIcon = new ImageIcon("spiaggia.jpg");
-                Image image = imageIcon.getImage();
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        backgroundPanel.setLayout(new GridBagLayout());
-
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
+        // Creazione del pannello per il formbox
+        RoundedPanel formPanel = new RoundedPanel(20); // Imposta il raggio a 20 per bordi arrotondati
+        formPanel.setBackground(new Color(51, 0, 110));
+        formPanel.setLayout(new GridBagLayout()); // Imposta il layout
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Aggiunta di padding per il formbox
+
         JLabel titleLabel = new JLabel("Benvenuto!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
-        gbc.gridx = 1;
+        titleLabel.setForeground(Color.WHITE);
+        gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        backgroundPanel.add(titleLabel, gbc);
+        formPanel.add(titleLabel, gbc);
 
         colorTimer = new Timer(1000, new ActionListener() {
             @Override
@@ -423,41 +391,45 @@ registerButton.addActionListener(new ActionListener() {
         Font labelFont = usernameLabel.getFont();
         usernameLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
         usernameLabel.setForeground(Color.WHITE);
-        backgroundPanel.add(usernameLabel, gbc);
+        formPanel.add(usernameLabel, gbc);
 
         gbc.gridx = 1;
         usernameField = new JTextField(30);
-        backgroundPanel.add(usernameField, gbc);
+        formPanel.add(usernameField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(new Font(labelFont.getName(), Font.BOLD, 22));
         passwordLabel.setForeground(Color.WHITE);
-        backgroundPanel.add(passwordLabel, gbc);
+        formPanel.add(passwordLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
         passwordField = new JPasswordField(30);
-        backgroundPanel.add(passwordField, gbc);
+        formPanel.add(passwordField, gbc);
 
         gbc.gridy = 3;
-        loginButton = new JButton("Login");
-        loginButton.setFont(new Font("Arial", Font.BOLD, 30));
-        loginButton.setBackground(Color.GREEN);
+        loginButton = new RoundedButton("Login");
+        loginButton.setFont(new Font("Calibri", Font.BOLD, 25));
+        loginButton.setBackground(new Color(144, 15, 177));
         loginButton.setForeground(Color.WHITE);
-        loginButton.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
         gbc.gridx = 0;
         gbc.gridwidth = 2;
-        backgroundPanel.add(loginButton, gbc);
+        formPanel.add(loginButton, gbc);
 
         gbc.gridy = 4;
-        registerButton = new JButton("REGISTER");
-        registerButton.setFont(new Font("Arial", Font.BOLD, 35));
-        registerButton.setBackground(Color.BLUE);
+        registerButton = new RoundedButton("Sign");
+        registerButton.setFont(new Font("Calibri", Font.BOLD, 25));
+        registerButton.setBackground(new Color(144, 15, 177));
         registerButton.setForeground(Color.WHITE);
-        registerButton.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-        backgroundPanel.add(registerButton, gbc);
+        formPanel.add(registerButton, gbc);
+
+        // Aggiunta del formPanel al backgroundPanel
+        gbc.gridy = 1;
+        backgroundPanel.add(formPanel, gbc);
+
+        getContentPane().add(backgroundPanel);
         
         // Inizializza il timer per controllare l'aggiornamento dell'immagine
     imageChangeTimer = new Timer(1000, new ActionListener() {
@@ -487,7 +459,7 @@ registerButton.addActionListener(new ActionListener() {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                // Azione quando il pulsante viene premuto
+                openRegistrationScreen();// Azione quando il pulsante viene premuto
             }
 
             @Override
@@ -498,18 +470,18 @@ registerButton.addActionListener(new ActionListener() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 // Cambia il colore del pulsante quando il mouse entra
-                registerButton.setBackground(Color.BLUE.darker()); // Blu pi� scuro
+                registerButton.setBackground(new Color(255, 0, 173));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 // Ripristina il colore originale quando il mouse esce
-                registerButton.setBackground(Color.BLUE);
+                registerButton.setBackground(new Color(144, 15, 177));
             }
         });
         loginButton.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {   
             }
 
             @Override
@@ -522,12 +494,12 @@ registerButton.addActionListener(new ActionListener() {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                loginButton.setBackground(Color.GREEN.darker());
+                loginButton.setBackground(new Color(255, 0, 173));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                loginButton.setBackground(Color.GREEN);
+                loginButton.setBackground(new Color(144, 15, 177));
             }
         });
 
@@ -543,13 +515,6 @@ registerButton.addActionListener(new ActionListener() {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     login();
                 }
-            }
-        });
-
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openRegistrationScreen();
             }
         });
 
@@ -575,10 +540,8 @@ L'uso di ActionListener e MouseListener per gestire gli eventi sui pulsanti e i 
 Questi ascoltatori sono osservatori che attendono eventi specifici e reagiscono ad essi.
 
 Template Method Pattern:
-I metodi come openRegistrationScreen(), login(), saveUserData() seguono un modello simile in quanto eseguono una sequenza di passaggi 
-specifici in un ordine definito, ma lasciano alcuni dettagli di implementazione alle sottoclassi.
+Template Method Pattern è applicato nella creazione dei pulsanti registerButton e loginButton. Entrambi i pulsanti ereditano dalla classe
+base JButton e ognuno di essi ridefinisce il metodo paintComponent(Graphics g) per personalizzare l'aspetto dei pulsanti in base allo stato
+(hovering o normale).
 
-Decorator Pattern (possibile utilizzo):
-In alcuni campi di input (JTextField e JPasswordField), è stata sovrascritta la logica di rendering per aggiungere effetti grafici 
-(come l'ovale quando sono attivi).
 */

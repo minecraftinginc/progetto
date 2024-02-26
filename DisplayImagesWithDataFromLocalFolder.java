@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 public class DisplayImagesWithDataFromLocalFolder extends JPanel {
     public DisplayImagesWithDataFromLocalFolder(int utente,String categorie) {
         createAndShowGUI(utente,categorie);
@@ -101,12 +100,30 @@ for (ImageData imageData : imageDataList) {
         //itemPanel.add(new JLabel("Prezzo: " + imageData.price));
         itemPanel.add(new JLabel("Categoria: " + imageData.category));
     
-    JButton button = new JButton("Riproduci");
+    // Creazione del pulsante di riproduzione video
+    ImageIcon buttonIcon = new ImageIcon("7A.png");//è il pulsante riproduci
+    Image buttonImage = buttonIcon.getImage();
+    Image newbuttonImage = buttonImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    buttonIcon.setImage(newbuttonImage);
+    JButton button = new JButton();
+    button.setBorder(null);
+    button.setBackground(null);
+    button.setIcon(buttonIcon);
+    button.setMinimumSize(new Dimension(50, 50));
+    button.setPreferredSize(new Dimension(40, 40));
     if (utente == 1) {
         itemPanel.add(button);
-        button.addActionListener(new ActionListener() {
+        button.addMouseListener(new MouseAdapter() {
+
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseEntered(MouseEvent e) {
+                ImageIcon hoverIcon = new ImageIcon("7B.png");
+                Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                button.setIcon(new ImageIcon(hoverImage));
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {
                 File videoFile = new File("uploads/" + imageData.name+".mp4"); // Crea un oggetto File con il nome del video
 
                 SwingUtilities.invokeLater(() -> {
@@ -128,7 +145,12 @@ for (ImageData imageData : imageDataList) {
                 
             });
             }
-        
+            @Override
+            public void mouseExited(MouseEvent e) {
+                ImageIcon hoverIcon = new ImageIcon("7A.png");
+                Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                button.setIcon(new ImageIcon(hoverImage));
+            }
         });
         // Aggiungi strutture di spaziatura vuote tra gli elementi
         itemPanel.add(Box.createVerticalStrut(50));
@@ -165,6 +187,11 @@ for (ImageData imageData : imageDataList) {
 }/*Strategy Pattern:
 L'uso di strategie diverse per filtrare le immagini in base alle categorie può essere considerato una forma di Strategy Pattern. 
 La logica per selezionare e filtrare le immagini in base alle categorie utilizza diverse strategie di filtraggio.
+
+Model-View-Controller (MVC): La classe ImageData rappresenta il modello dei dati per le immagini. Contiene le informazioni sull'immagine come nome, 
+descrizione, prezzo e categoria.La classe DisplayImagesWithDataFromLocalFolder è la vista. Si occupa di visualizzare le immagini e le relative informazioni.
+Mentre per il controller non è presente una classe esplicita che funge da controller però il comportamento di risposta agli eventi del mouse per il 
+pulsante di riproduzione del video agisce come controller
 
 Observer Pattern:
 L'aggiunta di un ActionListener ai pulsanti ("Riproduci") per gestire l'apertura di una finestra video mostra l'uso del pattern 

@@ -18,19 +18,12 @@ public class SitoFrame extends JFrame {
     ImageIcon image3Icon = new ImageIcon("youtubeicon.png");
     ImageIcon faviconIcon = new ImageIcon("icona.png");
     private Component spaceComponent; // Spazio vuoto nell'1%
-    JFrame oldSitoFrame = null;
-    private JButton userProfileButton;
-    private JButton websiteButton;
-    private JButton contactsButton;
-    private JButton insertButton;
     public SitoFrame(String username, String surname, String email,String name,String date, Image image, ImageIcon faviconIcon, String categorie) {
         sitoFrame = new JFrame("Sito");
         sitoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sitoFrame.setIconImage(faviconIcon.getImage());
         this.currentImage = image;
         int delay = 1000;
-        int w = 50;
-        int h = 50;
         String amm=null;
         String storedname = null;
         String storedEmail = null;
@@ -50,11 +43,11 @@ public class SitoFrame extends JFrame {
         e.printStackTrace();
     }    
         
-        image1Icon = new ImageIcon(image1Icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-        image2Icon = new ImageIcon(image2Icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-        image3Icon = new ImageIcon(image3Icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
+        image1Icon = new ImageIcon(image1Icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        image2Icon = new ImageIcon(image2Icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        image3Icon = new ImageIcon(image3Icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 
-        JButton button1 = new JButton(image1Icon);
+        JButton  button1 = new JButton (image1Icon);
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,8 +58,8 @@ public class SitoFrame extends JFrame {
                 }
             }
         });
-
-        JButton button2 = new JButton(image2Icon);
+        
+        JButton  button2 = new JButton (image2Icon);
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,8 +70,8 @@ public class SitoFrame extends JFrame {
                 }
             }
         });
-
-        JButton button3 = new JButton(image3Icon);
+        
+        JButton  button3 = new JButton (image3Icon);
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,184 +99,287 @@ public class SitoFrame extends JFrame {
         
     leftPanel = new JPanel();
     leftPanel.setLayout(new GridLayout(10, 1));
-    leftPanel.setBackground(Color.WHITE);
+    leftPanel.setBackground(Color.BLACK);
 
     imageLabel = new JLabel();
     leftPanel.add(imageLabel, BorderLayout.CENTER);
-    userProfileButton = new JButton("Profilo Utente");
-    websiteButton = new JButton("Sito Web");
-    contactsButton = new JButton("Contatti");
-    insertButton = new JButton("Inserisci");
-        
-        insertButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                InserimentoFilm InserimentoFilm=new InserimentoFilm();
-            }
-        });
-        
-        userProfileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                UserProfileFrame userProfileFrame = new UserProfileFrame(username, surname, email,name,date, currentImage);
-            }
-        });
 
-        websiteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Desktop.getDesktop().browse(new URI("benvenuto.html"));
-                } catch (IOException | URISyntaxException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+    ImageIcon userProfileIcon = new ImageIcon("1A.png");
+    Image userimage = userProfileIcon.getImage();
+    Image newImage = userimage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    userProfileIcon = new ImageIcon(newImage);
+    JButton userProfileButton = new JButton();
+    userProfileButton.setIcon(userProfileIcon);
+    userProfileButton.setMinimumSize(new Dimension(100, 120)); // Impostazione della dimensione minima
+    
+    ImageIcon websiteIcon = new ImageIcon("2A.png");
+    Image websiteImage = websiteIcon.getImage();
+    Image newWebsiteImage = websiteImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    websiteIcon.setImage(newWebsiteImage);
+    JButton websiteButton = new JButton();
+    websiteButton.setIcon(websiteIcon);
+    websiteButton.setMinimumSize(new Dimension(100, 100));
 
-        contactsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FeedbackFrame feedbackFrame = new FeedbackFrame();
+    ImageIcon contactsIcon = new ImageIcon("3A.png");
+    Image contactsImage = contactsIcon.getImage();
+    Image newContactsImage = contactsImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    contactsIcon.setImage(newContactsImage);
+    JButton contactsButton = new JButton();
+    contactsButton.setIcon(contactsIcon);
+    contactsButton.setMinimumSize(new Dimension(100, 100));
+
+    // Creazione del JButton per le Categorie
+    ImageIcon categorieIcon = new ImageIcon("4A.png");
+    Image categorieImage = categorieIcon.getImage();
+    Image newcategorieImage = categorieImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    categorieIcon.setImage(newcategorieImage);
+    JButton categorieButton = new JButton();
+    categorieButton.setIcon(categorieIcon);
+    categorieButton.setMinimumSize(new Dimension(100, 100));
+
+    ImageIcon insertIcon = new ImageIcon("5A.png");
+    Image insertImage = insertIcon.getImage();
+    Image newInsertImage = insertImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    insertIcon.setImage(newInsertImage);
+    JButton insertButton = new JButton();
+    insertButton.setIcon(insertIcon);
+    insertButton.setMinimumSize(new Dimension(100, 100));
+    
+    // Creazione del pulsante di logout
+    ImageIcon logoutIcon = new ImageIcon("6A.png");
+    Image logoutImage = logoutIcon.getImage();
+    Image newlogoutImage = logoutImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+    logoutIcon.setImage(newlogoutImage);
+    JButton logout = new JButton();
+    logout.setIcon(logoutIcon);
+    logout.setMinimumSize(new Dimension(100, 100));
+
+    userProfileButton.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("1B.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            userProfileButton.setIcon(new ImageIcon(hoverImage));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            UserProfileFrame userProfileFrame = new UserProfileFrame(username, surname, email,name,date, currentImage);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("1A.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            userProfileButton.setIcon(new ImageIcon(hoverImage));
+        }
+    });
+
+    websiteButton.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("2B.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            websiteButton.setIcon(new ImageIcon(hoverImage));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            try {
+                Desktop.getDesktop().browse(new URI("benvenuto.html"));
+            } catch (IOException | URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("2A.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            websiteButton.setIcon(new ImageIcon(hoverImage));
+        }
+    });
+
+    contactsButton.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("3B.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            contactsButton.setIcon(new ImageIcon(hoverImage));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            FeedbackFrame feedbackFrame = new FeedbackFrame();
                 feedbackFrame.setVisible(true);
-            }
-        });
-        // Creazione del JButton per le Categorie
-        JButton categorieButton = new JButton("Categorie");
-        categorieButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Crea un nuovo frame per le categorie
-                JFrame categorieFrame = new JFrame("Categorie");
-                categorieFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                categorieFrame.setSize(400, 300);
+        }
 
-                // Creazione dei JCheckBox per i tipi di video
-                JCheckBox avventuraCheckBox = new JCheckBox("Avventura");
-                JCheckBox storicoCheckBox = new JCheckBox("Storico");
-                JCheckBox animazioneCheckBox = new JCheckBox("Animazione");
-                JCheckBox animeCheckBox = new JCheckBox("Anime");
-                JCheckBox azioneCheckBox = new JCheckBox("Azione");
-                JCheckBox commediaCheckBox = new JCheckBox("Commedia");
-                JCheckBox pauraCheckBox = new JCheckBox("Paura");
-                JCheckBox thrillerCheckBox = new JCheckBox("Thriller");
-                JCheckBox fantascienzaCheckBox = new JCheckBox("Fantascienza");
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("3A.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            contactsButton.setIcon(new ImageIcon(hoverImage));
+        }
+    });
 
-                // Aggiungi i JCheckBox al contentPane del frame delle categorie
-                Container contentPane = categorieFrame.getContentPane();
-                contentPane.setLayout(new GridLayout(0, 1)); // Layout a colonna per i checkbox
-                contentPane.add(avventuraCheckBox);
-                contentPane.add(storicoCheckBox);
-                contentPane.add(animazioneCheckBox);
-                contentPane.add(animeCheckBox);
-                contentPane.add(azioneCheckBox);
-                contentPane.add(commediaCheckBox);
-                contentPane.add(pauraCheckBox);
-                contentPane.add(thrillerCheckBox);
-                contentPane.add(fantascienzaCheckBox);
-                JButton confermaButton = new JButton("Conferma");
-                confermaButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Raccolta delle selezioni delle checkbox
-                        StringBuilder selezioni = new StringBuilder();
-                        if (avventuraCheckBox.isSelected()) selezioni.append("Avventura:");
-                        if (storicoCheckBox.isSelected()) selezioni.append("Storico:");
-                        if (animazioneCheckBox.isSelected()) selezioni.append("Animazione:");
-                        if (animeCheckBox.isSelected()) selezioni.append("Anime:");
-                        if (azioneCheckBox.isSelected()) selezioni.append("Azione:");
-                        if (commediaCheckBox.isSelected()) selezioni.append("Commedia:");
-                        if (pauraCheckBox.isSelected()) selezioni.append("Paura:");
-                        if (thrillerCheckBox.isSelected()) selezioni.append("Thriller:");
-                        if (fantascienzaCheckBox.isSelected()) selezioni.append("Fantascienza:");
+    insertButton.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("5C.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            insertButton.setIcon(new ImageIcon(hoverImage));
+        }
 
-                        // Rimuove gli ultimi due punti se presente
-                        if (selezioni.length() > 0) {
-                            selezioni.deleteCharAt(selezioni.length() - 1);
-                        }
-                        // Controlla se sono state selezionate categorie
-                        if (selezioni.length() == 0) {
-                            // Nessuna categoria selezionata, gestisci questo caso qui
-                            sitoFrame.dispose();
-                            SitoFrame newSitoFrame = new SitoFrame(username, surname, email, name, date, image, faviconIcon, null);
-                            newSitoFrame.setVisible(true);
-                            oldSitoFrame = newSitoFrame;
-                        } else {
-                            // Altrimenti, chiamiamo SitoFrame2 e passiamo le selezioni
-                            sitoFrame.dispose();
-                            SitoFrame newSitoFrame = new SitoFrame(username, surname, email, name, date, image, faviconIcon, selezioni.toString());
-                            newSitoFrame.setVisible(true);
-                            oldSitoFrame = newSitoFrame;
-                        }
-                        // Chiudi il vecchio frame di SitoFrame se esiste
-                        if (oldSitoFrame != null) {
-                            oldSitoFrame.dispose();
-                        }
-                        // Chiudi il frame delle categorie
-                        categorieFrame.dispose();
+        @Override
+        public void mousePressed(MouseEvent e) {
+            InserimentoFilm InserimentoFilm=new InserimentoFilm();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("5A.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            insertButton.setIcon(new ImageIcon(hoverImage));
+        }
+    });
+
+    categorieButton.addMouseListener(new MouseAdapter() {
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("4B.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            categorieButton.setIcon(new ImageIcon(hoverImage));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            // Crea un nuovo frame per le categorie
+            JFrame categorieFrame = new JFrame("Categorie");
+            categorieFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            categorieFrame.setSize(400, 300);
+
+            // Creazione dei JCheckBox per i tipi di video
+            JCheckBox avventuraCheckBox = new JCheckBox("Avventura");
+            JCheckBox storicoCheckBox = new JCheckBox("Storico");
+            JCheckBox animazioneCheckBox = new JCheckBox("Animazione");
+            JCheckBox animeCheckBox = new JCheckBox("Anime");
+            JCheckBox azioneCheckBox = new JCheckBox("Azione");
+            JCheckBox commediaCheckBox = new JCheckBox("Commedia");
+            JCheckBox pauraCheckBox = new JCheckBox("Paura");
+            JCheckBox thrillerCheckBox = new JCheckBox("Thriller");
+            JCheckBox fantascienzaCheckBox = new JCheckBox("Fantascienza");
+
+            // Aggiungi i JCheckBox al contentPane del frame delle categorie
+            Container contentPane = categorieFrame.getContentPane();
+            contentPane.setLayout(new GridLayout(0, 1)); // Layout a colonna per i checkbox
+            contentPane.add(avventuraCheckBox);
+            contentPane.add(storicoCheckBox);
+            contentPane.add(animazioneCheckBox);
+            contentPane.add(animeCheckBox);
+            contentPane.add(azioneCheckBox);
+            contentPane.add(commediaCheckBox);
+            contentPane.add(pauraCheckBox);
+            contentPane.add(thrillerCheckBox);
+            contentPane.add(fantascienzaCheckBox);
+            JButton confermaButton = new JButton("Conferma");
+            confermaButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Raccolta delle selezioni delle checkbox
+                    StringBuilder selezioni = new StringBuilder();
+                    if (avventuraCheckBox.isSelected()) selezioni.append("Avventura:");
+                    if (storicoCheckBox.isSelected()) selezioni.append("Storico:");
+                    if (animazioneCheckBox.isSelected()) selezioni.append("Animazione:");
+                    if (animeCheckBox.isSelected()) selezioni.append("Anime:");
+                    if (azioneCheckBox.isSelected()) selezioni.append("Azione:");
+                    if (commediaCheckBox.isSelected()) selezioni.append("Commedia:");
+                    if (pauraCheckBox.isSelected()) selezioni.append("Paura:");
+                    if (thrillerCheckBox.isSelected()) selezioni.append("Thriller:");
+                    if (fantascienzaCheckBox.isSelected()) selezioni.append("Fantascienza:");
+
+                    // Rimuove gli ultimi due punti se presente
+                    if (selezioni.length() > 0) {
+                        selezioni.deleteCharAt(selezioni.length() - 1);
                     }
-                });
+                    // Controlla se sono state selezionate categorie
+                    if (selezioni.length() == 0) {
+                        // Nessuna categoria selezionata, gestisci questo caso qui
+                        sitoFrame.dispose();
+                        SitoFrame newSitoFrame = new SitoFrame(username, surname, email, name, date, image, faviconIcon, null);
+                        newSitoFrame.setVisible(true);
+                    } else {
+                        // Altrimenti, chiamiamo SitoFrame2 e passiamo le selezioni
+                        sitoFrame.dispose();
+                        SitoFrame newSitoFrame = new SitoFrame(username, surname, email, name, date, image, faviconIcon, selezioni.toString());
+                        newSitoFrame.setVisible(true);
+                    }
+                    // Chiudi il frame delle categorie
+                    categorieFrame.dispose();
+                }
+            });
 
-                // Aggiunta del pulsante "Conferma" al contentPane del frame delle categorie
-                contentPane.add(confermaButton);
-                categorieFrame.setVisible(true);
-            }
-        });
-        // Creazione del pulsante di logout
-        JButton logout = new JButton("Logout");
-        // Aggiunta di un ActionListener al pulsante di logout
-        logout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Logica di logout qui
-                // Per esempio, puoi chiudere la finestra corrente e tornare alla schermata di accesso
-                LoginInterface loginInterface = new LoginInterface();
-                loginInterface.setVisible(true);
-                // Chiudi il frame corrente
-                sitoFrame.dispose();
-            }
-        });
+            // Aggiunta del pulsante "Conferma" al contentPane del frame delle categorie
+            contentPane.add(confermaButton);
+            categorieFrame.setVisible(true);
+        }
 
-// Aggiunta del pulsante di logout al leftPanel
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("4A.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            categorieButton.setIcon(new ImageIcon(hoverImage));
+        }
+        
+    });
+    // Aggiunta di un ActionListener al pulsante di logout
+    logout.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("6B.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            logout.setIcon(new ImageIcon(hoverImage));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            LoginInterface loginInterface = new LoginInterface();
+            loginInterface.setVisible(true);
+            // Chiudi il frame corrente
+            sitoFrame.dispose();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ImageIcon hoverIcon = new ImageIcon("6A.png");
+            Image hoverImage = hoverIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+            logout.setIcon(new ImageIcon(hoverImage));
+        }
+    });
         leftPanel.add(userProfileButton);
         leftPanel.add(websiteButton);
         leftPanel.add(contactsButton);
-        leftPanel.add(button1);
-        leftPanel.add(button2);
-        leftPanel.add(button3);
         leftPanel.add(categorieButton);
         if("1".equals(amm))
         leftPanel.add(insertButton);
         leftPanel.add(logout);
+        leftPanel.add(button1);
+        leftPanel.add(button2);
+        leftPanel.add(button3);
 
-        class BackgroundPanel extends JPanel {
-            private Image backgroundImage;
-        
-            public BackgroundPanel(Image backgroundImage) {
-                this.backgroundImage = backgroundImage;
-            }
-        
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (backgroundImage != null) {
-                    // Disegna l'immagine di sfondo
-                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-                }
-            }
-        }
-        // Creazione del pannello di sfondo per il rightPanel con l'immagine desiderata
-        ImageIcon backgroundImgIcon = new ImageIcon("spiaggia.jpg"); // Sostituisci con il percorso dell'immagine
-        Image backgroundImg = backgroundImgIcon.getImage();
-        BackgroundPanel backgroundPanel = new BackgroundPanel(backgroundImg);
+        // Creazione del pannello di sfondo per il rightPanel
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setBackground(Color.BLACK);
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
         // Aggiungi il pannello di sfondo al rightPanel
         rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        rightPanel.setBackground(Color.BLACK);
         rightPanel.add(backgroundPanel);
 // Creazione del campo di ricerca
 JTextField searchField = new JTextField(30); // Larghezza iniziale
 // Impostazione del tipo di carattere
-Font font = new Font("Arial Black", Font.PLAIN, 12); // Imposta il tipo di carattere Arial Black con dimensione 12
+Font font = new Font("Calibri", Font.PLAIN, 12);
 searchField.setFont(font);
 searchField.setPreferredSize(new Dimension(350, 30)); // Impostazione della larghezza desiderata
 // Impostazione del testo di esempio e del colore grigio per il placeholder
@@ -385,7 +481,7 @@ searchField.addActionListener(new ActionListener() {
     JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, scrollPane);
     splitPane.setResizeWeight(0.005);
     splitPane.setDividerSize(1);
-
+    
     // Aggiunta del JSplitPane al frame principale
     sitoFrame.add(splitPane);
 
@@ -408,20 +504,13 @@ sitoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         sitoFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                int widthpanel = sitoFrame.getWidth() / 10;
-                int heightpanel = sitoFrame.getHeight() / 10;
-                leftPanel.setPreferredSize(new Dimension(widthpanel, heightpanel));
+                leftPanel.setPreferredSize(new Dimension(100, 100));
                 spaceComponent.setPreferredSize(new Dimension(sitoFrame.getWidth() / 200, sitoFrame.getHeight()));
                 sitoFrame.revalidate();
             }
         });
 
         sitoFrame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-        });
     }
 }
 /* DESIGN PATTERN
