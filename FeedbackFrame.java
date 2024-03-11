@@ -17,7 +17,7 @@ public class FeedbackFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 400); // Aumentato l'altezza per includere le stelle
         setLocationRelativeTo(null);
-
+        // area di testo per il feedback
         feedbackTextArea = new JTextArea(10, 40);
         JScrollPane scrollPane = new JScrollPane(feedbackTextArea);
 
@@ -31,9 +31,9 @@ public class FeedbackFrame extends JFrame {
             ratingPanel.add(starButton);
         }
         ratingLabel = new JLabel("Valutazione: " + userRating + " stelle");
-
+        //pulsante per inviare il feedback
         JButton sendButton = new JButton("Invia Feedback");
-
+        
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -7,8 +7,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -48,8 +46,10 @@ public class LoginInterface extends JFrame {
     private static LoginInterface loginInterface;
     ImageIcon faviconIcon = new ImageIcon("icona.png"); 
     private void login() {
+    // prendo i campi username e password 
     String username = usernameField.getText();
     String password = new String(passwordField.getPassword());
+    //controllo che l'username e la password siano corretti
     if (authenticate(username, password)) {
         dispose(); // Chiudi la finestra di login
     } else {

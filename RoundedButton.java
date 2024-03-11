@@ -3,9 +3,41 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// Interfaccia per definire il comportamento di sfondo del pulsante
+interface BackgroundStrategy {
+    Color getBackgroundColor();
+}
+
+// Implementazione di default della strategia di sfondo
+class DefaultBackgroundStrategy implements BackgroundStrategy {
+    @Override
+    public Color getBackgroundColor() {
+        return new Color(144, 15, 177);
+    }
+}
+
+// Implementazione della strategia di sfondo per lo stato di hover
+class HoverBackgroundStrategy implements BackgroundStrategy {
+    @Override
+    public Color getBackgroundColor() {
+        return new Color(100, 0, 120);
+    }
+}
+
+// Implementazione della strategia di sfondo per lo stato cliccato
+class PressedBackgroundStrategy implements BackgroundStrategy {
+    @Override
+    public Color getBackgroundColor() {
+        return new Color(80, 0, 100);
+    }
+}
+
 public class RoundedButton extends JButton {
-    private Color hoverBackgroundColor;
-    private Color pressedBackgroundColor;
+    private BackgroundStrategy defaultBackgroundStrategy;
+    private BackgroundStrategy hoverBackgroundStrategy;
+    private BackgroundStrategy pressedBackgroundStrategy;
+
+    private BackgroundStrategy currentBackgroundStrategy;
 
     public RoundedButton(String text) {
         super(text);
@@ -17,28 +49,35 @@ public class RoundedButton extends JButton {
         setBackground(new Color(144, 15, 177)); // Colore dello sfondo
         setFont(new Font("Arial", Font.PLAIN, 20)); // Specifica il font e le dimensioni
 
-        hoverBackgroundColor = new Color(100, 0, 120); // Colore di sfondo al passaggio del mouse
-        pressedBackgroundColor = new Color(80, 0, 100); // Colore di sfondo al clic del mouse
+        defaultBackgroundStrategy = new DefaultBackgroundStrategy();
+        hoverBackgroundStrategy = new HoverBackgroundStrategy();
+        pressedBackgroundStrategy = new PressedBackgroundStrategy();
+
+        currentBackgroundStrategy = defaultBackgroundStrategy;
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBackground(hoverBackgroundColor);
+                currentBackgroundStrategy = hoverBackgroundStrategy;
+                repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(new Color(144, 15, 177)); // Ripristina il colore originale
+                currentBackgroundStrategy = defaultBackgroundStrategy; // Ripristina il colore originale
+                repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                setBackground(pressedBackgroundColor);
+                currentBackgroundStrategy = pressedBackgroundStrategy;
+                repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                setBackground(hoverBackgroundColor);
+                currentBackgroundStrategy = hoverBackgroundStrategy;
+                repaint();
             }
         });
     }
@@ -46,13 +85,7 @@ public class RoundedButton extends JButton {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        if (getModel().isPressed()) {
-            g2.setColor(pressedBackgroundColor);
-        } else if (getModel().isRollover()) {
-            g2.setColor(hoverBackgroundColor);
-        } else {
-            g2.setColor(getBackground());
-        }
+        g2.setColor(currentBackgroundStrategy.getBackgroundColor());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // Disegna il rettangolo con angoli arrotondati
         g2.dispose();
 
@@ -63,4 +96,4 @@ public class RoundedButton extends JButton {
     public Dimension getPreferredSize() {
         return new Dimension(170, 40); // Imposta le dimensioni del pulsante
     }
-}
+}//strategy

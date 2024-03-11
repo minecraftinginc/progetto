@@ -8,13 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class VideoPlayer extends JPanel {
+interface VideoPlayerObserver {
+    void onVideoStopped();
+    void onVolumeChanged(double newVolume);
+}
+
+public class VideoPlayer extends JPanel implements VideoPlayerObserver {
     private MediaPlayer mediaPlayer;
     private JButton stopButton;
     private JButton volumeUpButton;
     private JButton volumeDownButton;
-    private int stopButtonClicks = 0;
-
+    private boolean isVideoPlaying = true;
     public VideoPlayer(File videoFile) {
         createAndShowGUI(videoFile);
     }
@@ -25,22 +29,21 @@ public class VideoPlayer extends JPanel {
         JFXPanel fxPanel = new JFXPanel();
         add(fxPanel, BorderLayout.CENTER);
 
-        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // FlowLayout per posizionare i pulsanti nella stessa riga
+        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         stopButton = new JButton("Stop");
         stopButton.addActionListener(e -> handleStopVideo());
-        controlPanel.add(stopButton); // Aggiunta del pulsante Stop al pannello dei controlli
+        controlPanel.add(stopButton);
 
         volumeUpButton = new JButton("Volume Up");
         volumeUpButton.addActionListener(e -> adjustVolume(0.1));
-        controlPanel.add(volumeUpButton); // Aggiunta del pulsante Volume Up
+        controlPanel.add(volumeUpButton);
 
         volumeDownButton = new JButton("Volume Down");
         volumeDownButton.addActionListener(e -> adjustVolume(-0.1));
-        controlPanel.add(volumeDownButton); // Aggiunta del pulsante Volume Down
+        controlPanel.add(volumeDownButton);
 
-        add(controlPanel, BorderLayout.SOUTH); // Aggiunta del pannello dei controlli al VideoPlayer
-    
+        add(controlPanel, BorderLayout.SOUTH);
 
         Platform.runLater(() -> {
             Media media = new Media(videoFile.toURI().toString());
@@ -56,21 +59,35 @@ public class VideoPlayer extends JPanel {
     }
 
     private void handleStopVideo() {
-        stopButtonClicks++;
-
-        if (stopButtonClicks % 2 == 0) {
-            if (mediaPlayer != null) {
-                mediaPlayer.play();
-            }
-        } else {
+        if (isVideoPlaying) {
             stopVideo();
+        } else {
+            playVideo();
         }
+        isVideoPlaying = !isVideoPlaying; // Inverte lo stato del video
     }
 
     public void stopVideo() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
+            notifyObserversOnVideoStopped();
         }
+    }
+    public void playVideo() {
+        if (mediaPlayer != null) {
+            mediaPlayer.play();
+            notifyObserversOnVideoStopped();
+        }
+    }
+
+    private void notifyObserversOnVideoStopped() {
+        System.out.println("Handle Stop Video - isVideoPlaying: " + isVideoPlaying);
+            if (isVideoPlaying) {
+                stopButton.setText("Play");
+            } else {
+                stopButton.setText("Stop");
+            }
+        System.out.println("After Handle Stop Video - isVideoPlaying: " + isVideoPlaying);
     }
 
     public void adjustVolume(double delta) {
@@ -78,9 +95,25 @@ public class VideoPlayer extends JPanel {
             double currentVolume = mediaPlayer.getVolume();
             double newVolume = Math.max(0, Math.min(1, currentVolume + delta));
             mediaPlayer.setVolume(newVolume);
+            notifyObserversOnVolumeChanged(newVolume);
         }
     }
-}/*
-Dependency Injection: La classe VideoPlayer riceve il File del video nel costruttore. Questo può essere visto come una forma 
-di dependency injection, dove l'oggetto dipende da un'altra classe esterna per ottenere le sue dipendenze.
- */
+
+    private void notifyObserversOnVolumeChanged(double newVolume) {
+        volumeDownButton.setEnabled(newVolume > 0);
+        volumeUpButton.setEnabled(newVolume < 1);
+    }
+
+    @Override
+    public void onVideoStopped() {
+        // Implementazione di ciò che deve accadere quando il video viene fermato
+        notifyObserversOnVideoStopped();
+    }
+
+    @Override
+    public void onVolumeChanged(double newVolume) {
+        // Implementazione di ciò che deve accadere quando il volume viene cambiato
+        volumeDownButton.setEnabled(newVolume > 0);
+        volumeUpButton.setEnabled(newVolume < 1);
+    }
+}//OBSERVER

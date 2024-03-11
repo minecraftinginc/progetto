@@ -36,11 +36,11 @@ class RoundBorder implements Border {
     }
 }
 
-public class InserimentoFilm extends JFrame {
+public abstract class InserimentoFilm extends JFrame {
 
     private JTextField nomeField, descrizioneField, prezzoField, categoriaField, registaField;
 
-    public InserimentoFilm() {
+    protected InserimentoFilm() {
         setTitle("Inserimento Film");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
@@ -88,7 +88,7 @@ public class InserimentoFilm extends JFrame {
 
     private void scegliImmagineEInserisci() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);  // Imposta la modalit� su file
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             String selectedPath = fileChooser.getSelectedFile().getAbsolutePath();
@@ -97,32 +97,32 @@ public class InserimentoFilm extends JFrame {
     }
 
     private void inserisciDati(String immaginePath) {
-    try {
-        String nome = nomeField.getText();
-        String descrizione = descrizioneField.getText();
-        double prezzo = Double.parseDouble(prezzoField.getText());
-        String categoria = categoriaField.getText();
-        String regista = registaField.getText();
-        String path=null;
-        // Otteniamo il nome del file dall'intero percorso
-       String nomeFile = Paths.get(immaginePath).getFileName().toString();
+        try {
+            String nome = nomeField.getText();
+            String descrizione = descrizioneField.getText();
+            double prezzo = Double.parseDouble(prezzoField.getText());
+            String categoria = categoriaField.getText();
+            String regista = registaField.getText();
+            String path=null;
+            // Otteniamo il nome del file dall'intero percorso
+            String nomeFile = Paths.get(immaginePath).getFileName().toString();
 
-        // Creiamo un percorso per la cartella "uploads" nel percorso corrente
-        Path cartellaUploads = Path.of("uploads");
+            // Creiamo un percorso per la cartella "uploads" nel percorso corrente
+            Path cartellaUploads = Path.of("uploads");
 
-        // Verifica se la cartella "uploads" esiste, altrimenti crea la cartella
-        if (!Files.exists(cartellaUploads)) {
-            Files.createDirectory(cartellaUploads);
-        }
+            // Verifica se la cartella "uploads" esiste, altrimenti crea la cartella
+            if (!Files.exists(cartellaUploads)) {
+                Files.createDirectory(cartellaUploads);
+            }
 
-        // Creiamo un percorso per la destinazione del file nella cartella "uploads"
-        Path destinazione = Paths.get("uploads", nomeFile);
-        // Copiamo il file nella cartella "uploads"
-        Files.copy(Path.of(immaginePath), destinazione, StandardCopyOption.REPLACE_EXISTING);
-        path="/uploads/"+nomeFile;
+            // Creiamo un percorso per la destinazione del file nella cartella "uploads"
+            Path destinazione = Paths.get("uploads", nomeFile);
+            // Copiamo il file nella cartella "uploads"
+            Files.copy(Path.of(immaginePath), destinazione, StandardCopyOption.REPLACE_EXISTING);
+            path="/uploads/"+nomeFile;
             // Creiamo una stringa nel formato specificato con il nuovo percorso
             String datiFilm = String.format(Locale.US, "%s,%s,%.2f,%s,%s,%s", nome, descrizione, prezzo, categoria, regista, path);
-            
+
             try (FileWriter fileWriter = new FileWriter("oggetti.txt", true)) {
                 // Scrivi la stringa nel file
                 fileWriter.write("\n" + datiFilm);
@@ -147,23 +147,9 @@ public class InserimentoFilm extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//serve a vedere se funziona anche da sola
         SwingUtilities.invokeLater(() -> {
-            new InserimentoFilm();
+            InserimentoFilm inserimentoFilm = InserimentoFilmFactory.createInserimentoFilm();
         });
     }
-}/*
-MVC (Model-View-Controller)
-Sebbene non sia implementato in modo esplicito, il codice esegue un'architettura MVC. La classe InserimentoFilm funge da vista, 
-gestendo l'interfaccia grafica, mentre la logica per l'elaborazione dei dati potrebbe essere considerata come il "modello". 
-L'interazione con gli eventi degli elementi UI rappresenta il controllo.
-
-Strategy (Border)
-La classe RoundBorder utilizzata per creare i bordi rotondi attorno ai campi di testo utilizza il pattern Strategy. Questa classe 
-implementa l'interfaccia Border, consentendo di definire un comportamento specifico (bordi arrotondati) e di applicarlo a diversi 
-campi di testo.
-
-Observer (ActionListener)
-L'uso di ActionListener per gestire l'evento di click del pulsante "Inserisci" è un esempio di Observer pattern. L'ActionListener è un 
-"osservatore" che ascolta gli eventi e reagisce di conseguenza.
-*/
+}//factory method

@@ -12,3 +12,4 @@ SmallSoldiers,anche da un piccolo cuore nasce il più grande dei  coraggi,720.00,
 WINNIETHEPOOHSANGUEEMIELE,bello il miele ma anche il sangue,650.00,Paura:Azione,Spillberg,/uploads/WINNIETHEPOOHSANGUEEMIELE.jpg
 Cyberpunk2077,Una citta da incubo,1400.00,Animazione:Thriller:Azione:Anime,Alberigo,/uploads/Cyberpunk2077.jpg
 KungFuPanda1,kung fu panda e le sue avventure,200,Animazione:Azione:Anime,Jon,/uploads/KungFuPanda1.jpg
+afolle,a,200.00,anime,bho,/uploads/ThorLoveandThunder.jpg

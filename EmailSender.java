@@ -9,8 +9,8 @@ import javax.mail.internet.MimeMessage;
 public class EmailSender {
 
     public void sendEmail(String recipientEmail) {
-        final String username = "zenocodino@gmail.com"; // Inserisci qui il tuo indirizzo email Gmail
-        final String password = "nuzs cvep rexw hwoj"; // Password specifica per l'applicazione
+        final String username = ""; // Inserisci qui il tuo indirizzo email Gmail
+        final String password = ""; // Password specifica per l'applicazione
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

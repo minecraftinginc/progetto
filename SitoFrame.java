@@ -165,6 +165,7 @@ public class SitoFrame extends JFrame {
         @Override
         public void mousePressed(MouseEvent e) {
             UserProfileFrame userProfileFrame = new UserProfileFrame(username, surname, email,name,date, currentImage);
+            userProfileFrame.setVisible(true); // Aggiunta per rendere visibile il frame del profilo utente
         }
 
         @Override
@@ -232,7 +233,8 @@ public class SitoFrame extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            InserimentoFilm InserimentoFilm=new InserimentoFilm();
+            InserimentoFilm inserimentoFilm = InserimentoFilmFactory.createInserimentoFilm(); // utilizza il Factory Method per ottenere un'istanza di InserimentoFilm
+            inserimentoFilm.setVisible(true); // mostra la finestra InserimentoFilm
         }
 
         @Override
@@ -257,7 +259,7 @@ public class SitoFrame extends JFrame {
             // Crea un nuovo frame per le categorie
             JFrame categorieFrame = new JFrame("Categorie");
             categorieFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            categorieFrame.setSize(400, 300);
+            categorieFrame.setSize(400, 300);//dimensione del frame
 
             // Creazione dei JCheckBox per i tipi di video
             JCheckBox avventuraCheckBox = new JCheckBox("Avventura");
@@ -270,7 +272,6 @@ public class SitoFrame extends JFrame {
             JCheckBox thrillerCheckBox = new JCheckBox("Thriller");
             JCheckBox fantascienzaCheckBox = new JCheckBox("Fantascienza");
 
-            // Aggiungi i JCheckBox al contentPane del frame delle categorie
             Container contentPane = categorieFrame.getContentPane();
             contentPane.setLayout(new GridLayout(0, 1)); // Layout a colonna per i checkbox
             contentPane.add(avventuraCheckBox);
@@ -462,7 +463,10 @@ searchField.addActionListener(new ActionListener() {
     searchPanel.add(searchIconLabel, gbc);
 
     // Creazione del pannello per la visualizzazione delle immagini
-    DisplayImagesWithDataFromLocalFolder displayPanel = new DisplayImagesWithDataFromLocalFolder(1,categorie);
+    DisplayImagesWithDataFromLocalFolder displayPanel = new DisplayImagesWithDataFromLocalFolder.Builder()
+    .setUtente(1)
+    .setCategorie(categorie)
+    .build();
     FlowLayout flowLayout = new FlowLayout();
     flowLayout.setHgap(50);
     flowLayout.setVgap(50);

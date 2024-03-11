@@ -68,8 +68,11 @@ public class Homepage extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        // Create the DisplayImagesWithDataFromLocalFolder panel
-        DisplayImagesWithDataFromLocalFolder displayPanel = new DisplayImagesWithDataFromLocalFolder(n,null);
+        // Crea il panel display ecc per stampare le immagini
+        DisplayImagesWithDataFromLocalFolder displayPanel = new DisplayImagesWithDataFromLocalFolder.Builder()
+        .setUtente(n)
+        .setCategorie(null)
+        .build();
 
         // Use GridLayout with 7 columns for the displayPanel
         GridLayout gridLayout = new GridLayout(0, 7);
