@@ -436,7 +436,7 @@ registerButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (newImage == null) {
-                // L'immagine � stata cambiata, aggiornala in "sito"
+                // L'immagine è stata cambiata, aggiornala in "sito"frame
                 JLabel imageLabel = (JLabel) leftPanel.getComponent(0);
                 ImageIcon newImageIcon = new ImageIcon(newImage.getScaledInstance(120, 120, Image.SCALE_SMOOTH));
                 imageLabel.setIcon(newImageIcon);
@@ -520,14 +520,3 @@ registerButton.addActionListener(new ActionListener() {
         });
     }
 }
-/*
-Observer Pattern:
-L'uso di ActionListener e MouseListener per gestire gli eventi sui pulsanti e i campi di input riflette una forma di Observer Pattern. 
-Questi ascoltatori sono osservatori che attendono eventi specifici e reagiscono ad essi.
-
-Template Method Pattern:
-Template Method Pattern è applicato nella creazione dei pulsanti registerButton e loginButton. Entrambi i pulsanti ereditano dalla classe
-base JButton e ognuno di essi ridefinisce il metodo paintComponent(Graphics g) per personalizzare l'aspetto dei pulsanti in base allo stato
-(hovering o normale).
-
-*/

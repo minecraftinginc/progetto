@@ -62,6 +62,11 @@
     </developer>
   </developers>
 
+ <properties>
+    <maven.compiler.source>22</maven.compiler.source>
+    <maven.compiler.target>22</maven.compiler.target>
+</properties>
+
   <scm>
     <connection>scm:git:git@github.com:mysql/mysql-connector-j.git</connection>
     <url>https://github.com/mysql/mysql-connector-j</url>

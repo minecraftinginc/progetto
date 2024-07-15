@@ -103,7 +103,7 @@ public class SitoFrame extends JFrame {
 
     imageLabel = new JLabel();
     leftPanel.add(imageLabel, BorderLayout.CENTER);
-
+    
     ImageIcon userProfileIcon = new ImageIcon("1A.png");
     Image userimage = userProfileIcon.getImage();
     Image newImage = userimage.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
@@ -211,8 +211,9 @@ public class SitoFrame extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            FeedbackFrame feedbackFrame = new FeedbackFrame();
-                feedbackFrame.setVisible(true);
+            Rating ratingSubject = new Rating();
+            FeedbackFrame feedbackFrame = new FeedbackFrame(ratingSubject);
+            feedbackFrame.setVisible(true);
         }
 
         @Override
@@ -516,7 +517,3 @@ sitoFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         sitoFrame.setVisible(true);
     }
 }
-/* DESIGN PATTERN
-Strategy pattern: Potrebbe essere interpretato in parte per il modo in cui vengono gestite le azioni
-degli ActionListener associati ai bottoni. Ogni bottone ha una strategia (azione) associata quando viene premuto.
- */

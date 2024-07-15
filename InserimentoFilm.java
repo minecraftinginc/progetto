@@ -105,10 +105,11 @@ public abstract class InserimentoFilm extends JFrame {
             String regista = registaField.getText();
             String path=null;
             // Otteniamo il nome del file dall'intero percorso
-            String nomeFile = Paths.get(immaginePath).getFileName().toString();
+            Path pathImmagine = Paths.get(immaginePath);
+            String nomeFile = pathImmagine.getFileName().toString();
 
             // Creiamo un percorso per la cartella "uploads" nel percorso corrente
-            Path cartellaUploads = Path.of("uploads");
+            Path cartellaUploads = Paths.get("uploads");
 
             // Verifica se la cartella "uploads" esiste, altrimenti crea la cartella
             if (!Files.exists(cartellaUploads)) {
@@ -116,10 +117,10 @@ public abstract class InserimentoFilm extends JFrame {
             }
 
             // Creiamo un percorso per la destinazione del file nella cartella "uploads"
-            Path destinazione = Paths.get("uploads", nomeFile);
+            Path destinazione = cartellaUploads.resolve(nomeFile);
             // Copiamo il file nella cartella "uploads"
-            Files.copy(Path.of(immaginePath), destinazione, StandardCopyOption.REPLACE_EXISTING);
-            path="/uploads/"+nomeFile;
+            Files.copy(pathImmagine, destinazione, StandardCopyOption.REPLACE_EXISTING);
+            path = "/uploads/" + nomeFile;
             // Creiamo una stringa nel formato specificato con il nuovo percorso
             String datiFilm = String.format(Locale.US, "%s,%s,%.2f,%s,%s,%s", nome, descrizione, prezzo, categoria, regista, path);
 
@@ -152,4 +153,4 @@ public abstract class InserimentoFilm extends JFrame {
             InserimentoFilm inserimentoFilm = InserimentoFilmFactory.createInserimentoFilm();
         });
     }
-}//factory method
+}//factory method ho cambiato Paths.of in Paths.get devo informarmi della differenza

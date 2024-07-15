@@ -99,8 +99,10 @@ public class Homepage extends JFrame {
             JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
             currentFrame.dispose();
         });
+        Rating ratingSubject = new Rating();
+
         feedbackButton.addActionListener(e -> {
-            FeedbackFrame feedbackFrame = new FeedbackFrame();
+            FeedbackFrame feedbackFrame = new FeedbackFrame(ratingSubject);
             feedbackFrame.setVisible(true);
         });
         
@@ -161,17 +163,4 @@ videoButton.addActionListener(e -> {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Homepage());
     }
-}/*
-Strategy Pattern (Pattern Strategia):
-L'uso di lambda expressions per specificare le azioni dei pulsanti (addActionListener(e -> {...})) può essere considerato 
-un'implementazione di Strategy Pattern, in cui viene incapsulato un comportamento specifico (strategia) all'interno di un oggetto 
-(lambda expression) che può essere cambiato dinamicamente.
-
-Observer Pattern (Pattern Osservatore):
-L'implementazione delle azioni dei pulsanti utilizza un approccio basato su eventi, dove un'azione (click del pulsante) viene catturata 
-da un ascoltatore specifico (lambda expression).
-
-Event Handling con ActionListener: può essere visto anche come un meccanismo o un paradigma di programmazione per questo non lo metterò nella presentazione
-L'utilizzo di ActionListener per gestire le azioni dei pulsanti (loginButton, feedbackButton, videoButton) rappresenta un esempio di 
-event handling. Questo consente di eseguire azioni specifiche quando i pulsanti vengono premuti. 
-*/
+}

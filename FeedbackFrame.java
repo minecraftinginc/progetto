@@ -5,35 +5,41 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FeedbackFrame extends JFrame {
+public class FeedbackFrame extends JFrame implements Observer {
     private JTextArea feedbackTextArea;
-    private JLabel ratingLabel; // Label per visualizzare la valutazione
-    private int userRating = 0; // Valutazione iniziale
+    private JLabel ratingLabel;
+    private Rating ratingSubject;
     ImageIcon faviconIcon = new ImageIcon("icona.png");
 
-    public FeedbackFrame() {
+    private void unregisterObserver() {
+        ratingSubject.removeObserver(this);
+    }
+
+    public FeedbackFrame(Rating ratingSubject) {
+        this.ratingSubject = ratingSubject;
+        ratingSubject.addObserver(this);
+
         setIconImage(faviconIcon.getImage());
         setTitle("Invia Feedback");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(400, 400); // Aumentato l'altezza per includere le stelle
+        setSize(400, 400); 
         setLocationRelativeTo(null);
-        // area di testo per il feedback
+
         feedbackTextArea = new JTextArea(10, 40);
         JScrollPane scrollPane = new JScrollPane(feedbackTextArea);
 
-        // Creazione delle stelle
         JPanel ratingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5;i++) {
             JButton starButton = new JButton("\u2665"); // Simbolo stella
             starButton.setFont(new Font("Arial", Font.PLAIN, 24));
-            int finalI = i; // Variabile finale per il listener
-            starButton.addActionListener(e -> setRating(finalI));
+            int finalI = i; 
+            starButton.addActionListener(e -> ratingSubject.setRating(finalI));
             ratingPanel.add(starButton);
         }
-        ratingLabel = new JLabel("Valutazione: " + userRating + " stelle");
-        //pulsante per inviare il feedback
+
+        ratingLabel = new JLabel("Valutazione: " + ratingSubject.getRating() + " stelle");
+
         JButton sendButton = new JButton("Invia Feedback");
-        
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,8 +57,6 @@ public class FeedbackFrame extends JFrame {
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(scrollPane, BorderLayout.CENTER);
-
-        // Aggiunta del pannello della valutazione sopra il pannello dei pulsanti
         mainPanel.add(ratingPanel, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
@@ -65,15 +69,20 @@ public class FeedbackFrame extends JFrame {
 
         setVisible(true);
     }
+    @Override
+    public void dispose() {
+        unregisterObserver();
+        super.dispose();
+    }
 
-    private void setRating(int rating) {
-        userRating = rating;
-        ratingLabel.setText("Valutazione: " + userRating + " stelle");
+    @Override
+    public void update(int rating) {
+        ratingLabel.setText("Valutazione: " + rating + " stelle");
     }
 
     private void writeFeedbackToFile(String feedback) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("feedback.txt", true))) {
-            writer.write("Valutazione: " + userRating + " stelle");
+            writer.write("Valutazione: " + ratingSubject.getRating() + " stelle");
             writer.newLine();
             writer.write(feedback);
             writer.newLine();
@@ -84,13 +93,8 @@ public class FeedbackFrame extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new FeedbackFrame();
+            Rating ratingSubject = new Rating();
+            new FeedbackFrame(ratingSubject);
         });
     }
-}/*Observer pattern : L'aggiornamento della valutazione quando vengono premute le stelle potrebbe essere 
-interpretato come un'implementazione semplificata dell'Observer pattern, dove l'azione sul pulsante notifica un cambiamento 
-nell'interfaccia.
-
-Dependency Injection : La classe FeedbackFrame riceve e utilizza un'icona per il setIconImage() attraverso un 
-oggetto ImageIcon. Sebbene sia un utilizzo semplice, potrebbe essere considerato un tipo di dependency injection.
-*/
+}
